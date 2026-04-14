@@ -1,0 +1,14 @@
+{
+  "name": "vibo",
+  "version": "0.1.0",
+  "description": "Public source snapshot of the Vibo core code.",
+  "private": true,
+  "homepage": "https://github.com/xfey/Vibo",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xfey/Vibo.git"
+  },
+  "keywords": [],
+  "license": "MIT",
+  "type": "module"
+}
