@@ -1,5 +1,15 @@
 :root {
   color-scheme: dark;
+  --bg: #020304;
+  --bg-soft: rgba(130, 176, 255, 0.14);
+  --text: rgba(245, 248, 255, 0.92);
+  --text-muted: rgba(245, 248, 255, 0.72);
+  --border: rgba(210, 225, 255, 0.28);
+  --border-strong: rgba(232, 241, 255, 0.62);
+  --surface: rgba(255, 255, 255, 0.03);
+  --highlight-a: #ffffff;
+  --highlight-b: #9fd1ff;
+  --highlight-c: #7ef0d9;
 }
 
 * {
@@ -13,9 +23,16 @@ body {
 }
 
 body {
-  background: #000;
-  color: #fff;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background:
+    radial-gradient(circle at top, var(--bg-soft), transparent 36%),
+    radial-gradient(circle at bottom, rgba(126, 240, 217, 0.08), transparent 34%),
+    var(--bg);
+  color: var(--text);
+  font-family:
+    "SF Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Monaco,
+    "Courier New", monospace;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
@@ -29,51 +46,191 @@ a {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  gap: 22px;
+  padding: 32px 24px;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(circle at center, black 36%, transparent 84%);
+  -webkit-mask-image: radial-gradient(circle at center, black 36%, transparent 84%);
+  pointer-events: none;
+}
+
+.logo {
+  display: block;
+  position: relative;
+  z-index: 1;
+  width: clamp(88px, 12vw, 116px);
+  height: auto;
+  border-radius: 24px;
+  filter:
+    drop-shadow(0 0 26px rgba(162, 208, 255, 0.22))
+    drop-shadow(0 0 56px rgba(126, 240, 217, 0.1));
 }
 
 .headline {
   margin: 0;
-  max-width: 1100px;
+  max-width: 900px;
   text-align: center;
-  font-size: clamp(1.2rem, 2.1vw, 1.7rem);
-  line-height: 1.6;
-  font-weight: 400;
+  font-size: clamp(1.05rem, 1.75vw, 1.42rem);
+  line-height: 1.9;
+  font-weight: 300;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+  text-wrap: balance;
+  position: relative;
+  z-index: 1;
+}
+
+.headline-highlight {
+  display: inline-block;
+  position: relative;
+  isolation: isolate;
+  padding: 0 0.12em;
+  font-weight: 500;
+  color: transparent;
+  background: linear-gradient(
+    120deg,
+    var(--highlight-a),
+    var(--highlight-b),
+    var(--highlight-c),
+    var(--highlight-a)
+  );
+  background-size: 220% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  text-shadow:
+    0 0 18px rgba(159, 209, 255, 0.22),
+    0 0 34px rgba(126, 240, 217, 0.12);
+  animation:
+    vibo-shimmer 3.8s ease-in-out infinite,
+    vibo-float 3.8s ease-in-out infinite;
+}
+
+.headline-highlight::after {
+  content: "";
+  position: absolute;
+  left: 0.08em;
+  right: 0.08em;
+  bottom: 0.05em;
+  height: 0.52em;
+  background: linear-gradient(
+    120deg,
+    rgba(159, 209, 255, 0.18),
+    rgba(126, 240, 217, 0.22)
+  );
+  border-radius: 999px;
+  filter: blur(10px);
+  z-index: -1;
+  animation: vibo-pulse 3.8s ease-in-out infinite;
 }
 
 .actions {
   display: flex;
-  gap: 12px;
-  margin-top: 28px;
+  gap: 14px;
+  margin-top: 2px;
+  position: relative;
+  z-index: 1;
 }
 
 .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 128px;
-  min-height: 42px;
+  gap: 9px;
+  min-width: 140px;
+  min-height: 44px;
   padding: 0 18px;
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--border);
   border-radius: 999px;
-  background: transparent;
+  background: var(--surface);
+  backdrop-filter: blur(12px);
+  color: var(--text);
+  font-size: 0.92rem;
+  font-weight: 400;
+  letter-spacing: 0.03em;
   transition:
+    transform 160ms ease,
     background-color 140ms ease,
     border-color 140ms ease,
-    color 140ms ease;
+    color 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.button-icon {
+  width: 15px;
+  height: 15px;
+  flex: none;
 }
 
 .button:hover {
-  background: #fff;
-  color: #000;
-  border-color: #fff;
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border-color: var(--border-strong);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.24);
+}
+
+@keyframes vibo-shimmer {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes vibo-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-1px);
+  }
+}
+
+@keyframes vibo-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scaleX(0.96);
+  }
+
+  50% {
+    opacity: 0.9;
+    transform: scaleX(1.02);
+  }
 }
 
 @media (max-width: 560px) {
+  .page {
+    gap: 18px;
+  }
+
+  .headline {
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+
   .actions {
     flex-direction: column;
     width: 100%;
-    max-width: 240px;
+    max-width: 252px;
   }
 
   .button {
