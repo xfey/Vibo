@@ -4,6 +4,13 @@
 
 <p align="center"><em>Less IDE, More Vibe.</em></p>
 <p align="center"><em>A minimal workbench for vibe coding.</em></p>
+<p align="center">
+  <img
+    src="./site/screenshots/vibo-features.gif"
+    alt="Vibo 功能亮点演示"
+    width="920"
+  />
+</p>
 
 # Vibo
 
